@@ -5,8 +5,7 @@
  */
 package drawing.domain;
 
-import java.awt.Color;
-import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
