@@ -5,6 +5,8 @@
  */
 package drawing.domain;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.io.File;
 
 /**
@@ -15,6 +17,12 @@ public class Image extends DrawingItem {
     private File file;
     private double size;
 
+    public Image(File file, double size, Point anchor, Color color) {
+        super(anchor, color);
+        this.file = file;
+        this.size = size;
+    }
+    
     public File getFile() {
         return file;
     }

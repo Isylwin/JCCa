@@ -5,7 +5,8 @@
  */
 package drawing.domain;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -15,8 +16,15 @@ public class Drawing {
     private String name;
     private int width;
     private int height;
-    private List<DrawingItem> items;
+    private final ArrayList<DrawingItem> items;
 
+    public Drawing(String name, int width, int height) {
+        this.name = name;
+        this.width = width;
+        this.height = height;
+        this.items = new ArrayList<>();
+    }
+    
     public String getName() {
         return name;
     }
@@ -41,8 +49,7 @@ public class Drawing {
         this.height = height;
     }
 
-    public List<DrawingItem> getItems() {
-        return
-                items;
+    public ArrayList<DrawingItem> getItems() {
+        return (ArrayList<DrawingItem>) Collections.unmodifiableList(items);
     }
 }

@@ -5,7 +5,9 @@
  */
 package drawing.domain;
 
+import java.awt.Color;
 import java.awt.Point;
+import java.util.Arrays;
 
 /**
  *
@@ -13,7 +15,13 @@ import java.awt.Point;
  */
 public class Polygon extends DrawingItem {
     private int weight;
-    private Point[] vertices;
+    private final Point[] vertices;
+
+    public Polygon(int weight, Point[] vertices, Point anchor, Color color) {
+        super(anchor, color);
+        this.weight = weight;
+        this.vertices = vertices;
+    }
 
     public int getWeight() {
         return weight;
@@ -24,6 +32,6 @@ public class Polygon extends DrawingItem {
     }
 
     public Point[] getVertices() {
-        return vertices;
+        return Arrays.copyOf(vertices, vertices.length);
     }
 }
