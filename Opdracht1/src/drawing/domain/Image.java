@@ -38,4 +38,11 @@ public class Image extends DrawingItem {
     public void setSize(double size) {
         this.size = size;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Image{" + "file=" + file + ", size=" + size + '}';
+    }
+    
+    
 }

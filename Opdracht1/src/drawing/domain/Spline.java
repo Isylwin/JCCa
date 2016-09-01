@@ -7,6 +7,7 @@ package drawing.domain;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.util.Arrays;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Spline extends DrawingItem {
 
     public Spline(Point[] points, int weight, int degree, Point anchor, Color color) {
         super(anchor, color);
-        this.points = points;
+        this.points = Arrays.copyOf(points, points.length);
         this.weight = weight;
         this.degree = degree;
     }
@@ -41,6 +42,13 @@ public class Spline extends DrawingItem {
     }
 
     public Point[] getPoints() {
-        return points;
+        return Arrays.copyOf(points, points.length);
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Spline{" + "weight=" + weight + ", degree=" + degree + '}';
+    }
+    
+    
 }

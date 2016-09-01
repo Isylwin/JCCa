@@ -38,4 +38,11 @@ public class Oval extends DrawingItem {
     public void setHeight(double height) {
         this.height = height;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Oval{" + "width=" + width + ", height=" + height + '}';
+    }
+    
+    
 }

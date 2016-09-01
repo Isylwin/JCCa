@@ -38,4 +38,11 @@ public class PaintedText extends DrawingItem {
     public void setFont(Font font) {
         this.font = font;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "PaintedText{" + "content=" + content + ", font=" + font + '}';
+    }
+    
+    
 }

@@ -5,14 +5,18 @@
  */
 package drawing.domain;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  *
  * @author Oscar
  */
-public class Drawing {
+public class Drawing implements Comparator<DrawingItem> {
     private String name;
     private int width;
     private int height;
@@ -49,7 +53,24 @@ public class Drawing {
         this.height = height;
     }
 
-    public ArrayList<DrawingItem> getItems() {
-        return (ArrayList<DrawingItem>) Collections.unmodifiableList(items);
+    public List<DrawingItem> getItems() {
+        return (List<DrawingItem>) Collections.unmodifiableList(items);
+    }
+    
+    public void addDrawingItem(DrawingItem item) {
+        items.add(item);
+        items.sort(this);
+    }
+    
+    public void changeDrawingItem(DrawingItem oldItem, DrawingItem newItem)
+    {
+        newItem.setPreviousState(oldItem);
+        items.remove(oldItem);
+        this.addDrawingItem(newItem);
+    }
+
+    @Override
+    public int compare(DrawingItem o1, DrawingItem o2) {
+        return o1.compareTo(o2);
     }
 }

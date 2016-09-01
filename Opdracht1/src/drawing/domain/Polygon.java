@@ -20,7 +20,7 @@ public class Polygon extends DrawingItem {
     public Polygon(int weight, Point[] vertices, Point anchor, Color color) {
         super(anchor, color);
         this.weight = weight;
-        this.vertices = vertices;
+        this.vertices = Arrays.copyOf(vertices, vertices.length);
     }
 
     public int getWeight() {
@@ -34,4 +34,11 @@ public class Polygon extends DrawingItem {
     public Point[] getVertices() {
         return Arrays.copyOf(vertices, vertices.length);
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "Polygon{" + "weight=" + weight + '}';
+    }
+    
+    
 }

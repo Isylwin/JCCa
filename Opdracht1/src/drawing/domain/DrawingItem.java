@@ -12,7 +12,7 @@ import java.awt.Point;
  *
  * @author Oscar
  */
-public abstract class DrawingItem {
+public abstract class DrawingItem implements Comparable<DrawingItem> {
     private Point anchor;
     private Color color;
     private DrawingItem previousState;
@@ -45,4 +45,20 @@ public abstract class DrawingItem {
     public void setPreviousState(DrawingItem previousState) {
         this.previousState = previousState;
     }   
+
+    @Override
+    public int compareTo(DrawingItem item) {
+        Point origin = new Point(0,0);
+        double dist1 = this.anchor.distance(origin);
+        double dist2 = item.getAnchor().distance(origin);
+        
+        return Double.compare(dist1,dist2);       
+    }
+
+    @Override
+    public String toString() {
+        return "DrawingItem{" + "anchor=" + anchor + ", color=" + color + '}';
+    }
+    
+    
 }
