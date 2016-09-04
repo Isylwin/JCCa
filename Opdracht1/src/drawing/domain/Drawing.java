@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -66,6 +67,25 @@ public class Drawing implements Comparator<DrawingItem> {
         newItem.setPreviousState(oldItem);
         items.remove(oldItem);
         this.addDrawingItem(newItem);
+    }
+    
+    public void changeDrawingItem(int index, DrawingItem newItem)
+    {
+        this.changeDrawingItem(items.get(index), newItem);
+    }
+    
+    public void revertDrawingItem(DrawingItem item) 
+    {
+        if(item.getPreviousState() != null)
+        {
+           items.remove(item);
+           this.addDrawingItem(item.getPreviousState());           
+        }    
+    }
+    
+    public void revertDrawingItem(int index)
+    {
+        this.revertDrawingItem(items.get(index));
     }
 
     @Override
