@@ -26,10 +26,26 @@ public class TestScript {
         test.addDrawingItem(new Spline(new Point[]{new Point(20,160), new Point(30,150), new Point(40,170)}, 30, 20, new Point(20,150), Color.YELLOW));
         test.addDrawingItem(new Image(null, 70.3, new Point(140,60), Color.GREEN));
        
-        //test.getItems().stream().forEach(x -> System.out.println(x));
-        for(DrawingItem x : test.getItems())
-        {
-            System.out.println(x);
-        }
+        printStuff(test,"Toevoegen van items:");          
+        
+        //Index, newItem. Veplaats de ovaal van 70,70 naar 140,160, de grootte naar 40,40 en de kleur naar licht grijs.
+        test.changeDrawingItem(1, new Oval(40,40,new Point(140,160), Color.LIGHT_GRAY));
+        
+        printStuff(test,"Veranderen van een item:");
+        System.out.println("De vorige status van het ovaal item:");
+        System.out.println(test.getItems().get(4).getPreviousState());
+        
+        test.revertDrawingItem(4);
+        printStuff(test,"Terugzetten van de status:");
+    }
+    
+    public static void printStuff(Drawing test, String text)
+    {
+       System.out.println(text);
+       //test.getItems().stream().forEach(x -> System.out.println(x));
+       for(DrawingItem x : test.getItems())
+       {
+           System.out.println(x);
+       } 
     }
 }
