@@ -57,7 +57,7 @@ public abstract class DrawingItem implements Comparable<DrawingItem> {
 
     @Override
     public String toString() {
-        return "DrawingItem{" + "anchor=" + anchor + ", color=" + color + '}';
+        return   "X=" + anchor.getX() + " Y=" + anchor.getY() + " color=" + color + ' ';
     }
     
     

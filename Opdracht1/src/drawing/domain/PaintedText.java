@@ -41,7 +41,7 @@ public class PaintedText extends DrawingItem {
 
     @Override
     public String toString() {
-        return super.toString() + "PaintedText{" + "content=" + content + ", font=" + font + '}';
+        return super.toString() + "PaintedText{" + "content='" + content + "', font=" + font + '}';
     }
     
     
