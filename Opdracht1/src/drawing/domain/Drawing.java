@@ -62,30 +62,29 @@ public class Drawing implements Comparator<DrawingItem> {
         items.sort(this);
     }
     
-    public void changeDrawingItem(DrawingItem oldItem, DrawingItem newItem)
-    {
-        newItem.setPreviousState(oldItem);
-        items.remove(oldItem);
-        this.addDrawingItem(newItem);
-    }
-    
     public void changeDrawingItem(int index, DrawingItem newItem)
     {
-        this.changeDrawingItem(items.get(index), newItem);
-    }
-    
-    public void revertDrawingItem(DrawingItem item) 
-    {
-        if(item.getPreviousState() != null)
+        if(index >= 0 && index < items.size())
         {
-           items.remove(item);
-           this.addDrawingItem(item.getPreviousState());           
-        }    
+            DrawingItem oldItem = items.get(index);
+            newItem.setPreviousState(oldItem);
+            items.remove(oldItem);
+            this.addDrawingItem(newItem);
+        }      
     }
     
     public void revertDrawingItem(int index)
     {
-        this.revertDrawingItem(items.get(index));
+        if(index >= 0 && index < items.size())
+        {
+            DrawingItem item = items.get(index);
+          
+            if(item.getPreviousState() != null)
+            {
+                items.remove(item);
+                this.addDrawingItem(item.getPreviousState());           
+            }
+        }
     }
 
     @Override
