@@ -26,6 +26,10 @@ public class TestScript {
         test.addDrawingItem(new Spline(new Point[]{new Point(20,160), new Point(30,150), new Point(40,170)}, 30, 20, new Point(20,150), Color.YELLOW));
         test.addDrawingItem(new Image(null, 70.3, new Point(140,60), Color.GREEN));
        
-        test.getItems().stream().forEach(x -> System.out.println(x));
+        //test.getItems().stream().forEach(x -> System.out.println(x));
+        for(DrawingItem x : test.getItems())
+        {
+            System.out.println(x);
+        }
     }
 }
