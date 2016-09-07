@@ -12,9 +12,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.Light;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -30,7 +35,9 @@ public class JavaFXPaintable implements Paintable {
 
     @Override
     public void setColor(Color color) {
-        gc.setFill(convertToJavaFxColor(color));
+        javafx.scene.paint.Color temp = convertToJavaFxColor(color);
+        gc.setFill(temp);
+        gc.setStroke(temp);
     }
 
     @Override
@@ -49,18 +56,26 @@ public class JavaFXPaintable implements Paintable {
         gc.setFont(convertToJavaFxFont(text.getFont()));
         gc.fillText(text.getContent(), text.getAnchor().getX(), text.getAnchor().getY());
     }
-    
+
     @Override
-    public void paintArc(Point a, Point b, int degree)
-    {
+    public void paintArc(Point p0, Point p2, int degree, int weight) {
+        gc.setLineWidth(weight);
         gc.beginPath();
-        double distance = a.distance(b);
-        double height = (Math.tan((double)degree)*distance)/2;
+        gc.moveTo(p0.getX(), p2.getY());
         
-        double radius = height/2 + Math.pow(distance, 2)/(8*height);
-        gc.arcTo(a.getX(), a.getY(), b.getX(), b.getY(), radius);
-        gc.fill();
-        gc.closePath();
+        double radians = degree * Math.PI/180;
+        final double ARCCONSTANT = 45 * Math.PI/180;
+        
+        double distance = p0.distance(p2);
+        double height = (Math.tan(radians) * distance) / 2;
+        
+        //WORK
+            
+        double radius = height / 2 + Math.pow(distance, 2) / (8 * height);
+        
+        gc.arcTo(p0.getX(), p0.getY(), p2.getX(), p2.getY(), radius);
+        gc.lineTo(p2.getX(), p2.getY());
+        gc.stroke();
     }
 
     @Override
@@ -73,19 +88,27 @@ public class JavaFXPaintable implements Paintable {
         Canvas canvas = gc.getCanvas();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
-    
-    private static javafx.scene.text.Font convertToJavaFxFont(Font font)
-    {
+
+    private static javafx.scene.text.Font convertToJavaFxFont(Font font) {
         return new javafx.scene.text.Font(font.getFontName(), font.getSize());
     }
-    
-    private static javafx.scene.image.Image convertToJavaFxImage(File file)
-    {
-       return new javafx.scene.image.Image(file.getAbsolutePath());
+
+    private static javafx.scene.image.Image convertToJavaFxImage(File file) {
+        InputStream is = null;
+        try {
+            is = new FileInputStream(file);
+        } catch (FileNotFoundException ex) {
+            
+        }
+        return new javafx.scene.image.Image(is);
     }
-    
-    private static javafx.scene.paint.Color convertToJavaFxColor(Color color)
-    {
-        return new javafx.scene.paint.Color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-    }    
+
+    private static javafx.scene.paint.Color convertToJavaFxColor(Color color) {
+        double red = ((double) color.getRed()) / 255;
+        double green = ((double) color.getGreen()) / 255;
+        double blue = ((double) color.getBlue()) / 255;
+        double alpha = ((double) color.getAlpha()) / 255;
+
+        return new javafx.scene.paint.Color(red, green, blue, alpha);
+    }
 }

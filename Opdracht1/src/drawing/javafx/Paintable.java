@@ -20,7 +20,7 @@ import java.awt.Point;
 public interface Paintable {
     void setColor(Color color);
     void paintLine(Point from, Point to, int weight);
-    void paintArc(Point a, Point b, int degree);
+    void paintArc(Point a, Point b, int degree, int weight);
     void paintOval(Oval oval);
     void paintText(PaintedText text);
     void paintImage(Image image);

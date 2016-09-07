@@ -23,7 +23,7 @@ public class Spline extends DrawingItem {
         super(anchor, color);
         this.points = Arrays.copyOf(points, points.length);
         this.weight = weight;
-        this.degree = degree;
+        setDegree(degree);
     }
 
     public int getWeight() {
@@ -38,8 +38,15 @@ public class Spline extends DrawingItem {
         return degree;
     }
 
-    public void setDegree(int degree) {
-        this.degree = degree;
+    public final void setDegree(int degree) {
+        if(degree <= 45 && degree >= 0)
+        {
+           this.degree = degree; 
+        }
+        else if(degree > 45)
+        {
+            this.degree = 45;
+        }
     }
 
     public Point[] getPoints() {
@@ -51,7 +58,7 @@ public class Spline extends DrawingItem {
         super.paint(paintable);
         for(int i = 0; i < points.length - 1; i++)
         {
-            paintable.paintArc(points[i], points[i+1], degree);
+            paintable.paintArc(points[i], points[i+1], degree, weight);
         }
     }
 

@@ -5,11 +5,10 @@
  */
 package drawing.domain;
 
-import java.io.Serializable;
+import drawing.javafx.Paintable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -85,6 +84,13 @@ public class Drawing implements Comparator<DrawingItem> {
                 this.addDrawingItem(item.getPreviousState());           
             }
         }
+    }
+    
+    public void paint(Paintable paintable)
+    {
+        items.stream().forEach((item) -> {
+            item.paint(paintable);
+        });
     }
 
     @Override
