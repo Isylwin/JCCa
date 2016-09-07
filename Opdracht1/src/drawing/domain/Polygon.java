@@ -5,6 +5,7 @@
  */
 package drawing.domain;
 
+import drawing.javafx.Paintable;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Arrays;
@@ -33,6 +34,17 @@ public class Polygon extends DrawingItem {
 
     public Point[] getVertices() {
         return Arrays.copyOf(vertices, vertices.length);
+    }
+
+    @Override
+    public void paint(Paintable paintable) {
+        super.paint(paintable);
+        for(int i = 0; i < vertices.length; i++)
+        {
+            Point current = vertices[i];
+            Point next = i+1 == vertices.length ? vertices[0] : vertices[i+1];
+            paintable.paintLine(current, next, weight);
+        }
     }
 
     @Override

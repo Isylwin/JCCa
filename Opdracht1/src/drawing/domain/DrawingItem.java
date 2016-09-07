@@ -5,6 +5,7 @@
  */
 package drawing.domain;
 
+import drawing.javafx.Paintable;
 import java.awt.Color;
 import java.awt.Point;
 
@@ -44,7 +45,12 @@ public abstract class DrawingItem implements Comparable<DrawingItem> {
 
     public void setPreviousState(DrawingItem previousState) {
         this.previousState = previousState;
-    }   
+    }
+    
+    public void paint(Paintable paintable)
+    {
+        paintable.setColor(this.color);
+    }
 
     @Override
     public int compareTo(DrawingItem item) {

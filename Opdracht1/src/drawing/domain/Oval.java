@@ -5,6 +5,7 @@
  */
 package drawing.domain;
 
+import drawing.javafx.Paintable;
 import java.awt.Color;
 import java.awt.Point;
 
@@ -37,6 +38,13 @@ public class Oval extends DrawingItem {
 
     public void setHeight(double height) {
         this.height = height;
+    }
+    
+    @Override
+    public void paint(Paintable paintable)
+    {
+        super.paint(paintable);
+        paintable.paintOval(this);
     }
 
     @Override

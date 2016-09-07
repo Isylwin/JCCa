@@ -5,6 +5,7 @@
  */
 package drawing.domain;
 
+import drawing.javafx.Paintable;
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Arrays;
@@ -43,6 +44,15 @@ public class Spline extends DrawingItem {
 
     public Point[] getPoints() {
         return Arrays.copyOf(points, points.length);
+    }
+
+    @Override
+    public void paint(Paintable paintable) {
+        super.paint(paintable);
+        for(int i = 0; i < points.length - 1; i++)
+        {
+            paintable.paintArc(points[i], points[i+1], degree);
+        }
     }
 
     @Override

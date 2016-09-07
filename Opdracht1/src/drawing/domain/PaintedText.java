@@ -5,6 +5,7 @@
  */
 package drawing.domain;
 
+import drawing.javafx.Paintable;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
@@ -37,6 +38,12 @@ public class PaintedText extends DrawingItem {
 
     public void setFont(Font font) {
         this.font = font;
+    }
+
+    @Override
+    public void paint(Paintable paintable) {
+        super.paint(paintable);
+        paintable.paintText(this);
     }
 
     @Override
