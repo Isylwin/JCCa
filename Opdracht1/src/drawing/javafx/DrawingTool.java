@@ -73,11 +73,11 @@ public class DrawingTool extends Application {
     {
         File file = new File("Kip.png");
         
-        //drawing.addDrawingItem(new Oval(30,70,new Point(560,70), Color.CYAN));
-        //drawing.addDrawingItem(new Polygon(1, new Point[]{new Point(150,150), new Point(40,60), new Point(60, 300), new Point(130,400), new Point(260,260) }, new Point(40,60), Color.ORANGE));
-        //drawing.addDrawingItem(new PaintedText("Hallo", new Font("Helvetica", 20, 20), new Point(120, 100), Color.DARK_GRAY));
-        drawing.addDrawingItem(new Spline(new Point[]{new Point(100,460), new Point(200,460)}, 1, 20, new Point(100,450), Color.YELLOW));
-        //drawing.addDrawingItem(new Image(file, 70.3, new Point(180,160), Color.GREEN));
+        drawing.addDrawingItem(new Oval(30,70,new Point(560,70), Color.CYAN));
+        drawing.addDrawingItem(new Polygon(1, new Point[]{new Point(150,150), new Point(40,60), new Point(60, 300), new Point(130,400), new Point(260,260) }, new Point(40,60), Color.ORANGE));
+        drawing.addDrawingItem(new PaintedText("Hallo", new Font("Helvetica", 20, 20), new Point(120, 100), Color.DARK_GRAY));
+        drawing.addDrawingItem(new Spline(new Point[]{new Point(100,460), new Point(200,360), new Point(356, 550)}, 1, 20, new Point(100,360), Color.BLUE));
+        drawing.addDrawingItem(new Image(file, 70.3, new Point(380,160), Color.GREEN));
     }
     
     public void draw()

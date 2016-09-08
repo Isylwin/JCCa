@@ -15,11 +15,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -69,7 +66,8 @@ public class JavaFXPaintable implements Paintable {
         double distance = p0.distance(p2);
         double height = (Math.tan(radians) * distance) / 2;
         
-        //WORK
+        //Needs complex numbers to find p1 which is at a 45 degree angle
+        //from p0 and p2 and on the median of the line between p0 and p2.
             
         double radius = height / 2 + Math.pow(distance, 2) / (8 * height);
         
@@ -94,6 +92,8 @@ public class JavaFXPaintable implements Paintable {
     }
 
     private static javafx.scene.image.Image convertToJavaFxImage(File file) {
+        //Image cannot be read from an url thus an inputstream is required.
+        
         InputStream is = null;
         try {
             is = new FileInputStream(file);

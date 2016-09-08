@@ -58,7 +58,7 @@ public class Spline extends DrawingItem {
         super.paint(paintable);
         for(int i = 0; i < points.length - 1; i++)
         {
-            paintable.paintArc(points[i], points[i+1], degree, weight);
+            paintable.paintLine(points[i], points[i+1], weight);
         }
     }
 
