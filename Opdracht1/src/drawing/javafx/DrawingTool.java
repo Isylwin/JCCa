@@ -11,10 +11,13 @@ import drawing.domain.Oval;
 import drawing.domain.PaintedText;
 import drawing.domain.Polygon;
 import drawing.domain.Spline;
+import drawing.persistency.PersistencyMediator;
+import drawing.persistency.SerializationMediator;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 import java.io.File;
+import java.util.Properties;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -30,24 +33,16 @@ public class DrawingTool extends Application {
     
     private JavaFXPaintable paintable;
     private Drawing drawing;
+    private PersistencyMediator mediator;
     
     @Override
     public void start(Stage primaryStage) {
         Canvas canvas = new Canvas(1000,800);
         drawing = new Drawing("Aardappel", 1000, 800);
-        
-        /*Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-        
-        @Override
-        public void handle(ActionEvent event) {
-        System.out.println("Hello World!");
-        }
-        });*/
+        mediator = new SerializationMediator();
+        mediator.init(new Properties());   
         
         StackPane root = new StackPane();
-        //root.getChildren().add(btn);
         root.getChildren().add(canvas);
         
         Scene scene = new Scene(root, 1000, 800);
@@ -59,7 +54,12 @@ public class DrawingTool extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
-        draw();
+        //draw();
+        
+        mediator.save(drawing);
+        
+        drawing = mediator.load("Aardappel");
+        draw();     
     }
 
     /**

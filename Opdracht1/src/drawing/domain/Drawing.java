@@ -6,6 +6,7 @@
 package drawing.domain;
 
 import drawing.javafx.Paintable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,7 +16,7 @@ import java.util.List;
  *
  * @author Oscar
  */
-public class Drawing implements Comparator<DrawingItem> {
+public class Drawing implements Comparator<DrawingItem>, Serializable {
     private String name;
     private int width;
     private int height;

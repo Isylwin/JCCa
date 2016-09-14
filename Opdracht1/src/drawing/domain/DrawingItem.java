@@ -8,12 +8,13 @@ package drawing.domain;
 import drawing.javafx.Paintable;
 import java.awt.Color;
 import java.awt.Point;
+import java.io.Serializable;
 
 /**
  *
  * @author Oscar
  */
-public abstract class DrawingItem implements Comparable<DrawingItem> {
+public abstract class DrawingItem implements Comparable<DrawingItem>, Serializable {
     private Point anchor;
     private Color color;
     private DrawingItem previousState;
