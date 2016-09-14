@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import java.lang.NullPointerException;
 
 /**
  *
@@ -59,18 +60,17 @@ public class JavaFXPaintable implements Paintable {
         gc.setLineWidth(weight);
         gc.beginPath();
         gc.moveTo(p0.getX(), p2.getY());
-        
-        double radians = degree * Math.PI/180;
-        final double ARCCONSTANT = 45 * Math.PI/180;
-        
+
+        double radians = degree * Math.PI / 180;
+        final double ARCCONSTANT = 45 * Math.PI / 180;
+
         double distance = p0.distance(p2);
         double height = (Math.tan(radians) * distance) / 2;
-        
+
         //Needs complex numbers to find p1 which is at a 45 degree angle
         //from p0 and p2 and on the median of the line between p0 and p2.
-            
         double radius = height / 2 + Math.pow(distance, 2) / (8 * height);
-        
+
         gc.arcTo(p0.getX(), p0.getY(), p2.getX(), p2.getY(), radius);
         gc.lineTo(p2.getX(), p2.getY());
         gc.stroke();
@@ -78,7 +78,12 @@ public class JavaFXPaintable implements Paintable {
 
     @Override
     public void paintImage(Image image) {
-        gc.drawImage(convertToJavaFxImage(image.getFile()), image.getAnchor().getX(), image.getAnchor().getY(), image.getSize(), image.getSize());
+        try {
+            gc.drawImage(convertToJavaFxImage(image.getFile()), image.getAnchor().getX(), image.getAnchor().getY(), image.getSize(), image.getSize());
+        } catch (NullPointerException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     @Override
@@ -93,12 +98,12 @@ public class JavaFXPaintable implements Paintable {
 
     private static javafx.scene.image.Image convertToJavaFxImage(File file) {
         //Image cannot be read from an url thus an inputstream is required.
-        
+
         InputStream is = null;
         try {
             is = new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            
+        } catch (FileNotFoundException | NullPointerException ex) {
+            System.out.println(ex.getMessage());
         }
         return new javafx.scene.image.Image(is);
     }
