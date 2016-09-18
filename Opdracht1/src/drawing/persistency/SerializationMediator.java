@@ -26,31 +26,34 @@ public class SerializationMediator implements PersistencyMediator {
 
     @Override
     public Drawing load(String nameDrawing) {
+        System.out.println("Loading: " + nameDrawing + "...");
         Drawing drawing = null;
         String path = props.getProperty("Path") + nameDrawing + props.getProperty("FileType");
 
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path)))
-        {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))) {
             drawing = (Drawing) ois.readObject();
-        } catch (IOException | ClassNotFoundException ex)
-        {
+        } catch (IOException | ClassNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
+        if (drawing != null) {
+            System.out.println("Loaded: " + nameDrawing);
+        }
         return drawing;
     }
 
     @Override
     public boolean save(Drawing drawing) {
+        System.out.println("Saving " + drawing.getName() + "...");
         String path = props.getProperty("Path") + drawing.getName() + props.getProperty("FileType");
         File file = new File(path);
-        
+
         try {
             file.createNewFile();
         } catch (IOException ex) {
             System.out.println("Couldn't find file: " + file.getAbsolutePath());
         }
-        
+
         boolean greatSuccess = false;
 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
@@ -58,17 +61,17 @@ public class SerializationMediator implements PersistencyMediator {
             greatSuccess = true;
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }       
+            ex.printStackTrace(System.err);
+        }
+
+        System.out.println("Saving succesful");
         return greatSuccess;
     }
 
     @Override
     public boolean init(Properties props) {
         this.props = props;
-        this.props.setProperty("Path", "tmp/");
-        this.props.setProperty("FileType", ".ser");
-        
+
         return true;
     }
 

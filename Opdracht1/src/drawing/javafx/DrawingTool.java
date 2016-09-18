@@ -11,12 +11,15 @@ import drawing.domain.Oval;
 import drawing.domain.PaintedText;
 import drawing.domain.Polygon;
 import drawing.domain.Spline;
+import drawing.persistency.DatabaseMediator;
 import drawing.persistency.PersistencyMediator;
 import drawing.persistency.SerializationMediator;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Properties;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -39,8 +42,8 @@ public class DrawingTool extends Application {
     public void start(Stage primaryStage) {
         Canvas canvas = new Canvas(1000,800);
         drawing = new Drawing("Aardappel", 1000, 800);
-        mediator = new SerializationMediator();
-        mediator.init(new Properties());   
+        mediator = new DatabaseMediator();
+        mediator.init(readProperties("config.properties"));   
         
         StackPane root = new StackPane();
         root.getChildren().add(canvas);
@@ -54,11 +57,10 @@ public class DrawingTool extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
-        //draw();
         
         mediator.save(drawing);
         
-        drawing = mediator.load("Aardappel");
+        //drawing = mediator.load("Aardappel");
         draw();     
     }
 
@@ -69,14 +71,29 @@ public class DrawingTool extends Application {
         launch(args);
     }
     
+    public Properties readProperties(String filePath)
+    {
+        Properties props = new Properties();
+        File file = new File(filePath);
+
+        try (InputStream is = new FileInputStream(file)) {          
+            props.load(is);
+        } catch (Exception e) {
+            System.out.println("Something went from with reading the file");
+            System.out.println(e.getMessage());
+        }
+        
+        return props;
+    }
+    
     public void addDrawings()
     {
         File file = new File("Kip.png");
         
-        drawing.addDrawingItem(new Oval(30,70,new Point(560,70), Color.CYAN));
+        drawing.addDrawingItem(new Oval(30,60,new Point(560,70), Color.YELLOW));
         drawing.addDrawingItem(new Polygon(1, new Point[]{new Point(150,150), new Point(40,60), new Point(60, 300), new Point(130,400), new Point(260,260) }, new Point(40,60), Color.ORANGE));
-        drawing.addDrawingItem(new PaintedText("Hallo", new Font("Helvetica", 20, 20), new Point(120, 100), Color.DARK_GRAY));
-        drawing.addDrawingItem(new Spline(new Point[]{new Point(100,460), new Point(200,360), new Point(356, 550)}, 1, 20, new Point(100,360), Color.BLUE));
+        drawing.addDrawingItem(new PaintedText("Hallo", new Font("Helvetica", 20, 20), new Point(120, 100), Color.BLUE));
+        drawing.addDrawingItem(new Spline(new Point[]{new Point(100,460), new Point(200,360), new Point(356, 550)}, 1, 20, new Point(100,360), Color.GREEN));
         drawing.addDrawingItem(new Image(file, 70.3, new Point(380,160), Color.GREEN));
     }
     
