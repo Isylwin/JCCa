@@ -6,9 +6,12 @@
 package drawing.domain;
 
 import drawing.javafx.Paintable;
-import java.awt.Color;
-import java.awt.Point;
+
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  *
@@ -24,6 +27,16 @@ public class Spline extends DrawingItem {
         this.points = Arrays.copyOf(points, points.length);
         this.weight = weight;
         setDegree(degree);
+
+        Collection<Integer> xCoordinates = new ArrayList<>();
+        Collection<Integer> yCoordinates = new ArrayList<>();
+        Arrays.stream(points).forEach(x -> xCoordinates.add((int)x.getX()));
+        Arrays.stream(points).forEach(x -> yCoordinates.add((int)x.getY()));
+
+        int width = Collections.max(xCoordinates) - Collections.min(xCoordinates);
+        int height = Collections.max(yCoordinates) - Collections.min(yCoordinates);
+
+        this.boundingBox = new Rectangle(anchor, new Dimension(width, height));
     }
 
     public int getWeight() {

@@ -6,8 +6,8 @@
 package drawing.domain;
 
 import drawing.javafx.Paintable;
-import java.awt.Color;
-import java.awt.Point;
+
+import java.awt.*;
 
 /**
  *
@@ -22,6 +22,7 @@ public class Oval extends DrawingItem {
         super(anchor, color);
         this.width = width;
         this.height = height;
+        this.boundingBox = new Rectangle(anchor, new Dimension((int) width, (int) height));
     }
     
     public double getWidth() {
@@ -30,6 +31,7 @@ public class Oval extends DrawingItem {
 
     public void setWidth(double width) {
         this.width = width;
+        this.boundingBox.setSize((int) width, (int) height);
     }
 
     public double getHeight() {
@@ -38,6 +40,7 @@ public class Oval extends DrawingItem {
 
     public void setHeight(double height) {
         this.height = height;
+        this.boundingBox.setSize((int) width, (int) height);
     }
     
     @Override

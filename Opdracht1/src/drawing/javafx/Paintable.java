@@ -8,9 +8,8 @@ package drawing.javafx;
 import drawing.domain.Image;
 import drawing.domain.Oval;
 import drawing.domain.PaintedText;
-import java.awt.Color;
-import java.awt.Point;
 
+import java.awt.*;
 
 
 /**
@@ -20,7 +19,7 @@ import java.awt.Point;
 public interface Paintable {
     void setColor(Color color);
     void paintLine(Point from, Point to, int weight);
-    void paintArc(Point a, Point b, int degree, int weight);
+    void paintRectangle(Rectangle rectangle);
     void paintOval(Oval oval);
     void paintText(PaintedText text);
     void paintImage(Image image);

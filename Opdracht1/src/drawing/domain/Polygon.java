@@ -6,9 +6,14 @@
 package drawing.domain;
 
 import drawing.javafx.Paintable;
-import java.awt.Color;
-import java.awt.Point;
+
+
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 
 /**
  *
@@ -18,10 +23,23 @@ public class Polygon extends DrawingItem {
     private int weight;
     private final Point[] vertices;
 
-    public Polygon(int weight, Point[] vertices, Point anchor, Color color) {
-        super(anchor, color);
+    public Polygon(int weight, Point[] vertices, Color color) {
+        super(new Point(0,0), color);
         this.weight = weight;
         this.vertices = Arrays.copyOf(vertices, vertices.length);
+
+        Collection<Integer> xCoordinates = new ArrayList<>();
+        Collection<Integer> yCoordinates = new ArrayList<>();
+        Arrays.stream(vertices).forEach(x -> xCoordinates.add((int)x.getX()));
+        Arrays.stream(vertices).forEach(x -> yCoordinates.add((int)x.getY()));
+
+        int width = Collections.max(xCoordinates) - Collections.min(xCoordinates);
+        int height = Collections.max(yCoordinates) - Collections.min(yCoordinates);
+
+        Point anchor = new Point(Collections.min(xCoordinates), Collections.min(yCoordinates));
+        this.setAnchor(anchor);
+
+        this.boundingBox = new Rectangle(anchor, new Dimension(width, height));
     }
 
     public int getWeight() {

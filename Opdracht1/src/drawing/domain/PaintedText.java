@@ -6,9 +6,10 @@
 package drawing.domain;
 
 import drawing.javafx.Paintable;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Point;
+
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 
 /**
  *
@@ -22,6 +23,15 @@ public class PaintedText extends DrawingItem {
         super(anchor, color);
         this.content = content;
         this.font = font;
+
+        AffineTransform affinetransform = new AffineTransform();
+        FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
+        int textwidth = (int)(font.getStringBounds(content, frc).getWidth());
+        int textheight = (int)(font.getStringBounds(content, frc).getHeight()) - 7;
+
+        Point anchor2 = new Point((int)anchor.getX(), (int)anchor.getY() - textheight);
+
+        this.boundingBox = new Rectangle(anchor2, new Dimension(textwidth, textheight));
     }
    
     public String getContent() {
@@ -38,6 +48,13 @@ public class PaintedText extends DrawingItem {
 
     public void setFont(Font font) {
         this.font = font;
+
+        AffineTransform affinetransform = new AffineTransform();
+        FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
+        int textwidth = (int)(font.getStringBounds(content, frc).getWidth());
+        int textheight = (int)(font.getStringBounds(content, frc).getHeight());
+
+        boundingBox.setSize( new Dimension(textwidth, textheight));
     }
 
     @Override

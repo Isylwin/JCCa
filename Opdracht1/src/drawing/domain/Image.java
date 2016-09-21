@@ -6,8 +6,8 @@
 package drawing.domain;
 
 import drawing.javafx.Paintable;
-import java.awt.Color;
-import java.awt.Point;
+
+import java.awt.*;
 import java.io.File;
 
 /**
@@ -22,6 +22,7 @@ public class Image extends DrawingItem {
         super(anchor, color);
         this.file = file;
         this.size = size;
+        this.boundingBox = new Rectangle(anchor, new Dimension((int)size, (int)size));
     }
     
     public File getFile() {
@@ -38,6 +39,7 @@ public class Image extends DrawingItem {
 
     public void setSize(double size) {
         this.size = size;
+        this.boundingBox.setSize((int) size, (int) size);
     }
 
     @Override

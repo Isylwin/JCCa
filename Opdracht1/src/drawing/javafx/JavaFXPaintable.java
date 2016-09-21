@@ -8,9 +8,8 @@ package drawing.javafx;
 import drawing.domain.Image;
 import drawing.domain.Oval;
 import drawing.domain.PaintedText;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Point;
+
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,6 +44,12 @@ public class JavaFXPaintable implements Paintable {
     }
 
     @Override
+    public void paintRectangle(Rectangle rectangle) {
+        gc.setLineWidth(1);
+        gc.strokeRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+    }
+
+    @Override
     public void paintOval(Oval oval) {
         gc.fillOval(oval.getAnchor().getX(), oval.getAnchor().getY(), oval.getWidth(), oval.getHeight());
     }
@@ -53,27 +58,6 @@ public class JavaFXPaintable implements Paintable {
     public void paintText(PaintedText text) {
         gc.setFont(convertToJavaFxFont(text.getFont()));
         gc.fillText(text.getContent(), text.getAnchor().getX(), text.getAnchor().getY());
-    }
-
-    @Override
-    public void paintArc(Point p0, Point p2, int degree, int weight) {
-        gc.setLineWidth(weight);
-        gc.beginPath();
-        gc.moveTo(p0.getX(), p2.getY());
-
-        double radians = degree * Math.PI / 180;
-        final double ARCCONSTANT = 45 * Math.PI / 180;
-
-        double distance = p0.distance(p2);
-        double height = (Math.tan(radians) * distance) / 2;
-
-        //Needs complex numbers to find p1 which is at a 45 degree angle
-        //from p0 and p2 and on the median of the line between p0 and p2.
-        double radius = height / 2 + Math.pow(distance, 2) / (8 * height);
-
-        gc.arcTo(p0.getX(), p0.getY(), p2.getX(), p2.getY(), radius);
-        gc.lineTo(p2.getX(), p2.getY());
-        gc.stroke();
     }
 
     @Override
@@ -105,7 +89,7 @@ public class JavaFXPaintable implements Paintable {
         } catch (FileNotFoundException | NullPointerException ex) {
             System.out.println(ex.getMessage());
         }
-        return new javafx.scene.image.Image(is);
+        return new javafx.scene.image.Image(is != null ? is : null);
     }
 
     private static javafx.scene.paint.Color convertToJavaFxColor(Color color) {

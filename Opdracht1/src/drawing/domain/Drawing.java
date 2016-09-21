@@ -54,12 +54,17 @@ public class Drawing implements Comparator<DrawingItem>, Serializable {
     }
 
     public List<DrawingItem> getItems() {
-        return (List<DrawingItem>) Collections.unmodifiableList(items);
+        return Collections.unmodifiableList(items);
     }
     
     public void addDrawingItem(DrawingItem item) {
-        items.add(item);
-        items.sort(this);
+        if(!items.stream().anyMatch(i -> i.overlaps(item))) {
+            items.add(item);
+            items.sort(this);
+        }
+        else {
+            System.out.println("Found overlapping item: " + item.toString());
+        }
     }
     
     public void changeDrawingItem(int index, DrawingItem newItem)

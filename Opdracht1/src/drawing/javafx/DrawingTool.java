@@ -5,12 +5,7 @@
  */
 package drawing.javafx;
 
-import drawing.domain.Drawing;
-import drawing.domain.Image;
-import drawing.domain.Oval;
-import drawing.domain.PaintedText;
-import drawing.domain.Polygon;
-import drawing.domain.Spline;
+import drawing.domain.*;
 import drawing.persistency.DatabaseMediator;
 import drawing.persistency.PersistencyMediator;
 import drawing.persistency.SerializationMediator;
@@ -36,13 +31,14 @@ public class DrawingTool extends Application {
     
     private JavaFXPaintable paintable;
     private Drawing drawing;
-    private PersistencyMediator mediator;
     
     @Override
     public void start(Stage primaryStage) {
+        PersistencyMediator mediator;
+
         Canvas canvas = new Canvas(1000,800);
         drawing = new Drawing("Aardappel", 1000, 800);
-        mediator = new DatabaseMediator();
+        mediator = new SerializationMediator();
         mediator.init(readProperties("config.properties"));   
         
         StackPane root = new StackPane();
@@ -57,11 +53,8 @@ public class DrawingTool extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
-        mediator.save(drawing);
-        
-        //drawing = mediator.load("Aardappel");
-        draw();     
+
+        draw();
     }
 
     /**
@@ -88,10 +81,10 @@ public class DrawingTool extends Application {
     
     public void addDrawings()
     {
-        File file = new File("Kip.png");
+        File file = new File("./Kip.png");
         
         drawing.addDrawingItem(new Oval(30,60,new Point(560,70), Color.YELLOW));
-        drawing.addDrawingItem(new Polygon(1, new Point[]{new Point(150,150), new Point(40,60), new Point(60, 300), new Point(130,400), new Point(260,260) }, new Point(40,60), Color.ORANGE));
+        //drawing.addDrawingItem(new Polygon(1, new Point[]{new Point(150,150), new Point(40,60), new Point(60, 500), new Point(430,600), new Point(260,260) }, Color.ORANGE));
         drawing.addDrawingItem(new PaintedText("Hallo", new Font("Helvetica", 20, 20), new Point(120, 100), Color.BLUE));
         drawing.addDrawingItem(new Spline(new Point[]{new Point(100,460), new Point(200,360), new Point(356, 550)}, 1, 20, new Point(100,360), Color.GREEN));
         drawing.addDrawingItem(new Image(file, 70.3, new Point(380,160), Color.GREEN));
